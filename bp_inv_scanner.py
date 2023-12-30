@@ -1,9 +1,18 @@
+'''
+
+Read the console to view the listed items.
+
+'''
+
+
+
 # Initialization
 
 import requests
 from bs4 import BeautifulSoup
 import time
 
+# Below are the different item types. If you want to filter the items for only hats, change the "itemType" variable = to 1
 
 itemTypes = {
     0 : "AllItems",
@@ -21,10 +30,10 @@ itemTypes = {
     12 : "Models"
 }
 
-userId = 1
-itemType = 0
-currentPage = 1
-rarity = 0
+userId = 1 # Change the "userId" variable to your desired user.
+itemType = 0 # Explained above
+currentPage = 1 # DO NOT CHANGE THIS VARIABLE
+rarity = 0  # 0 means Rares + Non-Rares | 1 means ONLY rares
 
 inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
 
