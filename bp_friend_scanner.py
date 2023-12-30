@@ -35,13 +35,13 @@ if checkIfUserExists(userId):
     numberOfPages = 0
 
 
-    # Finds the number between the parethesis in "friendString"
-    for i in range(len(friendString) - 2, -1, -1): # length of string - 2 because we dont need the last charcter ")"
+    # Finds where the "(" is located in "friendString"
+    for i in range(len(friendString) - 2, -1, -1): # length of string - 2 because we dont need the last character ")"
         if friendString[i] == "(":
             characterPosition = i
             break
 
-    # Isolates the numbers between the parenthesis in "friendString"
+    # Isolates the numbers (the number of friends) between the parenthesis in "friendString"
     for i in range(characterPosition + 1, len(friendString) - 1, 1):
         numberOfFriends += friendString[i]
 
