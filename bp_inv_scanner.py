@@ -53,17 +53,16 @@ def checkIfUserExists(userId):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find("title").text
-        
-    #return response.status_code >= 200 and response.status_code <= 400 and not '<meta property="og:url" content="https://www.brickplanet.com/players">' inresponse.text
-        
+    
     return checkStatusCode(url) and not "Players" in title
     
 def getItemValue(item):
-    itemURL = item.get("href")
+    # idk how to get the estimated value. if you manage to do it, edit the script
 
     
 def getNameFromUserId(userId):
-    print()
+    # If you know how to do this and/or get the userId when you input a username, please add that into the code
+    # This isnt as important but the code for this function could be useful for future projects
     
     
     
