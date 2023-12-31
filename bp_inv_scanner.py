@@ -1,6 +1,16 @@
 '''
+INSTRUCTIONS:
 
-Read the console to view the listed items.
+Change the "userId" variable to the UserId of your choice.
+Then, filter the items that you want to be shown by changing the "itemType" variable. 
+    - 0 = All Items will be scanned
+    - 1 = Only hats will be scanned
+    - 2 = Only Crates will be scanned
+    - The entire list can be found below in the "itemTypes" dictionary.
+
+Change the "rarity" variable to either 0 or 1. 0 means that all items will be scanned, regardless of rarity. 1 means that only rares will be scanned. 2 >= will break the script.
+
+Run the program and read the console to view the results.
 
 '''
 
@@ -11,8 +21,6 @@ Read the console to view the listed items.
 import requests
 from bs4 import BeautifulSoup
 import time
-
-# Below are the different item types. If you want to filter the items for only hats, change the "itemType" variable = to 1
 
 itemTypes = {
     0 : "AllItems",
@@ -30,16 +38,12 @@ itemTypes = {
     12 : "Models"
 }
 
-userId = 1 # Change the "userId" variable to your desired user.
-itemType = 0 # Explained above
+userId = 1
+itemType = 0
 currentPage = 1 # DO NOT CHANGE THIS VARIABLE
-rarity = 0  # 0 means Rares + Non-Rares | 1 means ONLY rares
+rarity = 0
 
 inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
-
-
-####################################################
-
 
 # Functions
     
@@ -57,10 +61,12 @@ def checkIfUserExists(userId):
     return checkStatusCode(url) and not "Players" in title
     
 def getItemValue(item):
+    print()
     # idk how to get the estimated value. if you manage to do it, edit the script
 
     
 def getNameFromUserId(userId):
+    print()
     # If you know how to do this and/or get the userId when you input a username, please add that into the code
     # This isnt as important but the code for this function could be useful for future projects
     
