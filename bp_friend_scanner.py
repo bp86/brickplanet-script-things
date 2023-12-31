@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time
 
 
-userId = 6731
+userId = 2
 
 
 def checkStatusCode(url):
@@ -55,8 +55,15 @@ if checkIfUserExists(userId):
         response = requests.get(friendListURL)
         soup = BeautifulSoup(response.text, "html.parser")
         allFriendsOnPage = soup.find_all("div", class_ = "col-4 col-lg-2 text-center")  # 6x3 players/friends on each page (18 players/friends per page)
+
+        if not allFriendsOnPage: # Makes sure that the friends are on the page. If they aren't, its prob b/c bp servers are down or you're rate limited
+            print("Connection error. Either BP servers are down or you've sent too many requests. Program will resume in 10 seconds.")
+            currentPage -= 1
+            time.sleep(10)   
         
         for playerHTML in allFriendsOnPage:
             a_tag = playerHTML.find("a", class_ = "d-block truncate text-light")
             friendURL = a_tag["href"] # its just the URL to the player/friend cuz im too lazy to extract both the username and userid
             print(friendURL)
+
+print("\nScanning Complete")
