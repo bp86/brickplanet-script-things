@@ -85,14 +85,14 @@ if checkIfUserExists(userId):
         soup = BeautifulSoup(content, "html.parser")
         
         allItemsOnPage = soup.find_all("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1")
+
+        if soup.find_all("div", class_ = "faded"): 
+            break
         
         if not allItemsOnPage:
             print("Connection error. Either BP servers are down or you've sent too many requests. Program will resume in 10 seconds.")
             currentPage -= 1
             time.sleep(10)        
-        
-        if soup.find_all("div", class_ = "faded"): 
-            break        
         
         print("\nCurrent Page:", currentPage)
         
