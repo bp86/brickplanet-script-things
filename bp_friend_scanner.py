@@ -1,3 +1,14 @@
+'''
+
+INSTRUCTIONS:
+
+Change the "userId" variable = to your desired userId (for brickplanet). Then run the program.
+
+'''
+
+
+
+
 import requests
 from bs4 import BeautifulSoup
 import time
