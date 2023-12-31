@@ -2,7 +2,9 @@
 
 INSTRUCTIONS:
 
-Change the "userId" variable = to your desired userId (for brickplanet). Then run the program.
+Change the "userId" variable = to your desired userId (for brickplanet). 
+
+Then run the program and read the console to view the results.
 
 '''
 
