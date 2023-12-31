@@ -1,3 +1,14 @@
+'''
+
+INSTRUCTIONS:
+
+This is currently not working. DONT DOWNLOAD THIS cuz it'll waste your time and storage.
+
+If you can help me get an items Estimated Value, that'd be wonderful.
+
+'''
+
+
 import requests
 from bs4 import BeautifulSoup
 import time
