@@ -1,3 +1,14 @@
+'''
+
+INSTRUCTIONS:
+
+This was used by me (86) to find the remaining 2-character usernames on Brickplanet.
+
+Running the program is a waste of time. The only thing of value is this: https://www.brickplanet.com/api/register/check-username-availability?username=PlaceHolder
+
+'''
+
+
 import requests
 from bs4 import BeautifulSoup
 
