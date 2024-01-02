@@ -69,7 +69,7 @@ if checkIfUserExists(userId):
         soup = BeautifulSoup(response.text, "html.parser")
         allFriendsOnPage = soup.find_all("div", class_ = "col-4 col-lg-2 text-center")  # 6x3 players/friends on each page (18 players/friends per page)
 
-        if not allFriendsOnPage: # Makes sure that the friends are on the page. If they aren't, its prob b/c bp servers are down or you're rate limited
+        if not allFriendsOnPage and numberOfFriends > 0: # Makes sure that the friends are on the page. If they aren't, its prob b/c bp servers are down or you're rate limited
             print("Connection error. Either BP servers are down or you've sent too many requests. Program will resume in 10 seconds.")
             currentPage -= 1
             time.sleep(10)   
