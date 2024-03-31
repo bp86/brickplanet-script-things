@@ -8,7 +8,7 @@ Then, filter the items that you want to be shown by changing the "itemType" vari
     - 2 = Only Crates will be scanned
     - The entire list can be found below in the "itemTypes" dictionary.
 
-Change the "rarity" variable to either 0 or 1. 0 means that all items will be scanned, regardless of rarity. 1 means that only rares will be scanned. 2 >= will break the script.
+Change the "rarity" variable to either 0 or 1.  0 means that all items will be scanned, regardless of rarity.  1 means that only rares will be scanned.  2 >= will break the script.
 
 Run the program and read the console to view the results.
 
@@ -39,9 +39,9 @@ itemTypes = {
 }
 
 userId = 1
-itemType = 0
+itemType = 1
+rarity = 1  # 0 is all items | 1 is only rares
 currentPage = 1 # DO NOT CHANGE THIS VARIABLE
-rarity = 0
 
 inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
 
@@ -81,13 +81,11 @@ if checkIfUserExists(userId):
         inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
         
         content = requests.get(inventoryURL).text
-        
         soup = BeautifulSoup(content, "html.parser")
         
         allItemsOnPage = soup.find_all("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1")
 
-        if soup.find_all("div", class_ = "faded"): 
-            break
+        if soup.find_all("div", class_ = "faded"): break # If no items found on the page
         
         if not allItemsOnPage:
             print("Connection error. Either BP servers are down or you've sent too many requests. Program will resume in 10 seconds.")
@@ -104,9 +102,8 @@ if checkIfUserExists(userId):
         
         currentPage += 1
 
-    print("Scanning Complete")
+    print("\nScanning Complete")
     
 else:
     
-    print("Player doesn't exist OR you've sent too many requests")
-
+    print("Player doesn't exist OR you've sent too many requests OR the BP servers are down.")
