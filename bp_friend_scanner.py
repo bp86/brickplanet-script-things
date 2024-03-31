@@ -17,6 +17,7 @@ import time
 
 
 userId = 2
+numberOfFriends = 0
 
 
 def checkStatusCode(url):
@@ -41,8 +42,7 @@ if checkIfUserExists(userId):
     response = requests.get(friendListURL)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    friendString = soup.find("div", class_ = "text-2xl fw-semibold mb-2").text # Example string: "86's Friends (57)"
-    characterPosition = 0 # The position of the "(" in "friendString"
+    friendString = soup.find("div", class_ = "text-2xl fw-semibold mb-2").text # Example string: "BrickPlanet's Friends (0)"
     numberOfFriends = ""
 
     numberOfPages = 0
@@ -50,14 +50,10 @@ if checkIfUserExists(userId):
 
     # Finds where the "(" is located in "friendString"
     for i in range(len(friendString) - 2, -1, -1): # length of string - 2 because we dont need the last character ")"
-        if friendString[i] == "(":
-            characterPosition = i
-            break
-
-    # Isolates the numbers (the number of friends) between the parenthesis in "friendString"
-    for i in range(characterPosition + 1, len(friendString) - 1, 1):
+        if friendString[i] == "(": break
         numberOfFriends += friendString[i]
 
+    numberOfFriends = numberOfFriends[::-1] # Reverses the string because the loop was in reverse order.
     numberOfPages = int(int(numberOfFriends) / 18) + 1
 
     
@@ -78,5 +74,8 @@ if checkIfUserExists(userId):
             a_tag = playerHTML.find("a", class_ = "d-block truncate text-light")
             friendURL = a_tag["href"] # its just the URL to the player/friend cuz im too lazy to extract both the username and userid
             print(friendURL)
+
+else:
+    print("Player doesn't exist or the BP servers are down.")
 
 print("\nScanning Complete")
