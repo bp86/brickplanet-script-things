@@ -25,7 +25,7 @@ def checkStatusCode(url):
     return response.status_code >= 200 and response.status_code <= 400
 
 def checkIfUserExists(userId):
-    profileURL = "https://www.brickplanet.com/profile/" + str(userId)
+    profileURL = f"https://www.brickplanet.com/profile/{userId}"
 
     response = requests.get(profileURL)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -37,14 +37,13 @@ def checkIfUserExists(userId):
 if checkIfUserExists(userId):
     currentPage = 1
     
-    friendListURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-friends?page=" + str(currentPage)
+    friendListURL = f"https://www.brickplanet.com/profile/{userId}/view-friends?page={currentPage}"
     
     response = requests.get(friendListURL)
     soup = BeautifulSoup(response.text, "html.parser")
 
     friendString = soup.find("div", class_ = "text-2xl fw-semibold mb-2").text # Example string: "BrickPlanet's Friends (0)"
     numberOfFriends = ""
-
     numberOfPages = 0
 
 
@@ -53,13 +52,13 @@ if checkIfUserExists(userId):
         if friendString[i] == "(": break
         numberOfFriends += friendString[i]
 
-    numberOfFriends = numberOfFriends[::-1] # Reverses the string because the loop was in reverse order.
-    numberOfPages = int(int(numberOfFriends) / 18) + 1
+    numberOfFriends = int(numberOfFriends[::-1]) # Reverses the string because the loop was in reverse order.
+    numberOfPages = int(numberOfFriends / 18) + 1
 
     
     for i in range(numberOfPages):
         currentPage = i + 1
-        friendListURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-friends?page=" + str(currentPage)
+        friendListURL = f"https://www.brickplanet.com/profile/{userId}/view-friends?page={currentPage}"
 
         response = requests.get(friendListURL)
         soup = BeautifulSoup(response.text, "html.parser")
