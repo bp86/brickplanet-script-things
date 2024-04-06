@@ -1,21 +1,3 @@
-'''
-INSTRUCTIONS:
-
-Change the "userId" variable to the UserId of your choice.
-Then, filter the items that you want to be shown by changing the "itemType" variable. 
-    - 0 = All Items will be scanned
-    - 1 = Only hats will be scanned
-    - 2 = Only Crates will be scanned
-    - The entire list can be found below in the "itemTypes" dictionary.
-
-Change the "rarity" variable to either 0 or 1.  0 means that all items will be scanned, regardless of rarity.  1 means that only rares will be scanned.  2 >= will break the script.
-
-Run the program and read the console to view the results.
-
-'''
-
-
-
 # Initialization
 
 import requests
@@ -41,9 +23,9 @@ itemTypes = {
 userId = 1
 itemType = 1
 rarity = 1  # 0 is all items | 1 is only rares
-currentPage = 1 # DO NOT CHANGE THIS VARIABLE
+currentPage = 1 # dont change this
 
-inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
+inventoryURL = f"https://www.brickplanet.com/profile/{userId}/view-backpack?type={itemType}&page={currentPage}&rare={rarity}"
 
 # Functions
     
@@ -52,7 +34,7 @@ def checkStatusCode(url):
     return response.status_code >= 200 and response.status_code <= 400
     
 def checkIfUserExists(userId):
-    url = "https://www.brickplanet.com/profile/" + str(userId)
+    url = f"https://www.brickplanet.com/profile/{userId}"
 
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -61,14 +43,11 @@ def checkIfUserExists(userId):
     return checkStatusCode(url) and not "Players" in title
     
 def getItemValue(item):
-    print()
-    # idk how to get the estimated value. if you manage to do it, edit the script
+    pass # idk how to remotely load a dynamically loaded page thing
 
     
 def getNameFromUserId(userId):
-    print()
-    # If you know how to do this and/or get the userId when you input a username, please add that into the code
-    # This isnt as important but the code for this function could be useful for future projects
+    pass # too lazy to figure this out
     
     
     
@@ -78,7 +57,7 @@ if checkIfUserExists(userId):
     
     while True:
         
-        inventoryURL = "https://www.brickplanet.com/profile/" + str(userId) + "/view-backpack?type=" + str(itemType) + "&page=" + str(currentPage) + "&rare=" + str(rarity)
+        inventoryURL = f"https://www.brickplanet.com/profile/{userId}/view-backpack?type={itemType}&page={currentPage}&rare={rarity}"
         
         content = requests.get(inventoryURL).text
         soup = BeautifulSoup(content, "html.parser")
