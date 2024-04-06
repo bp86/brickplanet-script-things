@@ -1,22 +1,9 @@
-'''
-
-INSTRUCTIONS:
-
-Change the "userId" variable = to your desired userId (for brickplanet). 
-
-Then run the program and read the console to view the results.
-
-'''
-
-
-
-
 import requests
 from bs4 import BeautifulSoup
 import time
 
 
-userId = 2
+userId = 2 # change this to any user id
 numberOfFriends = 0
 
 
