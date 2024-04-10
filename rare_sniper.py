@@ -14,9 +14,9 @@ def numberFilter(num : str):
 
     for char in num.strip():
         if char == "M": abbreviationMultiplier = 1000000
-        if char.isdigit(): filtered += char
+        if char.isdigit() or char == ".": filtered += char
 
-    return int(filtered) * abbreviationMultiplier
+    return float(filtered) * abbreviationMultiplier
 
 
 response = requests.get(url)
