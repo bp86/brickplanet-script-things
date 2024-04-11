@@ -1,6 +1,6 @@
 https://www.brickplanet.com/api/register/check-username-availability?username=Example_Username  # Checks username availability
 
-https://www.brickplanet.com/friends/send-request/30148  # thing i scraped and saw that there was a post (or get i dont remember) request. basically if youre smart you can use this to remotely send friend requests
+https://www.brickplanet.com/friends/send-request/30148  # thing i scraped and saw that there was a post request (or get request i dont remember). basically if youre smart you can use this to remotely send friend requests
 
 https://www.brickplanet.com/profile/USERID/view-backpack?type=ITEM_TYPE&page=PAGE_NUMBER&rare=RARITY  # Player backpack viewer. look at the inventory scanner script for more info
 
