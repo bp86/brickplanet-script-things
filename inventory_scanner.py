@@ -24,6 +24,7 @@ userId = 1
 itemType = 1
 rarity = 1  # 0 is all items | 1 is only rares
 currentPage = 1 # dont change this
+priceFilter = 250 # Change this number to whatever you want. if you dont want a filter, make it = None
 
 inventoryURL = f"https://www.brickplanet.com/profile/{userId}/view-backpack?type={itemType}&page={currentPage}&rare={rarity}"
 
@@ -48,6 +49,16 @@ def getItemValue(item):
     
 def getNameFromUserId(userId):
     pass # too lazy to figure this out
+
+def filterNumber(num : str):
+    filtered = ""
+    abbreviationMultiplier = 1
+
+    for char in num.strip():
+        if char == "M": abbreviationMultiplier = 1000000
+        if char.isdigit() or char == ".": filtered += char
+
+    return float(filtered) * abbreviationMultiplier
     
     
     
@@ -62,7 +73,7 @@ if checkIfUserExists(userId):
         content = requests.get(inventoryURL).text
         soup = BeautifulSoup(content, "html.parser")
         
-        allItemsOnPage = soup.find_all("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1")
+        allItemsOnPage = soup.find_all("div", class_ = "col-6 col-md-3")
 
         if soup.find_all("div", class_ = "faded"): break # If no items found on the page
         
@@ -74,10 +85,16 @@ if checkIfUserExists(userId):
         print("\nCurrent Page:", currentPage)
         
         for item in allItemsOnPage:
-            itemName = item.text.strip()
-            #estimatedValue = getItemValue(item)
-            #print(itemName, "| Estimated Value:", estimatedValue)
-            print(itemName)
+            itemName = item.find("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1").text.strip()
+            price = None
+
+            if item.find("div", class_ = "text-credits") != None:
+                price = filterNumber(item.find("div", class_ = "text-credits").text.strip())
+            
+            if priceFilter == None or price == None:
+                print(f"{itemName} : {price}")
+            elif price <= priceFilter: # Filter can be '<=' or '>='
+                print(f"{itemName} : {price}")
         
         currentPage += 1
 
