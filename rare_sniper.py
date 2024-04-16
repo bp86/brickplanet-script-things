@@ -8,7 +8,7 @@ url = f"https://www.brickplanet.com/shop/search?featured=0&rare=1&type=0&search=
 priceFilter = 20 # Filters out items that are selling above this number. Feel free to change this number
 
 
-def numberFilter(num : str):
+def filterNumber(num : str):
     filtered = ""
     abbreviationMultiplier = 1
 
@@ -50,7 +50,7 @@ if response.status_code >= 200 and response.status_code <= 400:
                 #print(f"{itemName} has no sellers") # Comment this line out if you want to
                 continue
 
-            bestPrice = numberFilter(item.find("div", class_ = "text-credits").text.strip())
+            bestPrice = filterNumber(item.find("div", class_ = "text-credits").text.strip())
 
             if bestPrice > priceFilter: continue
 
