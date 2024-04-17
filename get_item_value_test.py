@@ -1,38 +1,12 @@
-'''
-
-INSTRUCTIONS:
-
-This is currently not working. DONT DOWNLOAD THIS cuz it'll waste your time and storage.
-
-If you can help me get an items Estimated Value, that'd be wonderful.
-
-'''
-
-
 import requests
 from bs4 import BeautifulSoup
-import time
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import FirefoxOptions
+url = "https://www.brickplanet.com/shop/18443/spectral-egg" # Change this to the link of any RARE
 
+content = requests.get(url).text
+soup = BeautifulSoup(content, "html.parser")
+divThing = soup.find_all("div", class_ = "text-2xl fw-semibold text-credits mb-1")
 
-url = "https://www.brickplanet.com/shop/15304/rubrum-sicarius"
-
-
-
-def get_webdriver():
-    use
-
-
-    
-def getItemValue():
-    itemURL = "https://www.brickplanet.com/shop/14166/halloween-crate-1"
-    
-    
-    
-
-getItemValue()
-        
-
+estimatedValue = divThing[0].text.strip() # RAP
+volume = divThing[1].text.strip()
+marketCap = divThing[2].text.strip()
