@@ -42,13 +42,6 @@ def checkIfUserExists(userId):
     title = soup.find("title").text
     
     return checkStatusCode(url) and not "Players" in title
-    
-def getItemValue(item):
-    pass # idk how to remotely load a dynamically loaded page thing
-
-    
-def getNameFromUserId(userId):
-    pass # too lazy to figure this out
 
 def filterNumber(num : str):
     filtered = ""
