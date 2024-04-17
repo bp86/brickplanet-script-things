@@ -1,5 +1,3 @@
-# Initialization
-
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -20,15 +18,17 @@ itemTypes = {
     12 : "Models"
 }
 
-userId = 1
-itemType = 1
+userId = 6731
+itemType = 4
 rarity = 1  # 0 is all items | 1 is only rares
 currentPage = 1 # dont change this
+
+filterType = "Value"  # Filter types: Value (rarity must = 1 to filter by value) and Price
+valueFilter = 100 # Change this number to whatever you want. if you dont want a filter, make it = None
 priceFilter = 250 # Change this number to whatever you want. if you dont want a filter, make it = None
 
 inventoryURL = f"https://www.brickplanet.com/profile/{userId}/view-backpack?type={itemType}&page={currentPage}&rare={rarity}"
 
-# Functions
     
 def checkStatusCode(url):
     response = requests.get(url)
@@ -52,10 +52,8 @@ def filterNumber(num : str):
         if char.isdigit() or char == ".": filtered += char
 
     return float(filtered) * abbreviationMultiplier
-    
-    
-    
-# Main    
+
+
 
 if checkIfUserExists(userId):
     
@@ -78,21 +76,40 @@ if checkIfUserExists(userId):
         print("\nCurrent Page:", currentPage)
         
         for item in allItemsOnPage:
-            itemName = item.find("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1").text.strip()
-            price = None
+            itemContent = item.find("a", class_ = "d-block truncate text-decoration-none fw-semibold text-light mb-1")
+            itemName = itemContent.text.strip()
 
-            if item.find("div", class_ = "text-credits") != None:
-                price = filterNumber(item.find("div", class_ = "text-credits").text.strip())
-            
-            if priceFilter == None or price == None:
-                print(f"{itemName} : {price}")
-            elif price <= priceFilter: # Filter can be '<=' or '>='
-                print(f"{itemName} : {price}")
+            if filterType.lower() == "price":
+                price = None
+
+                if itemContent.find("div", class_ = "text-credits") != None:
+                    price = filterNumber(item.find("div", class_ = "text-credits").text.strip())
+                
+                if priceFilter == None or price == None:
+                    print(f"{itemName} : {price}")
+                elif price <= priceFilter: # Filter can be '<=' or '>='
+                    print(f"{itemName} : {price}")
+
+            elif (filterType.lower() == "value" or filterType.lower() == "rap") and rarity == 1:
+                itemLink = itemContent["href"]
+                content = requests.get(itemLink).text
+                soup = BeautifulSoup(content, "html.parser")
+                divThing = soup.find_all("div", class_ = "text-2xl fw-semibold text-credits mb-1")
+
+                estimatedValue = filterNumber(divThing[0].text.strip())
+
+                if valueFilter == None:
+                    print(f"{itemName} : {estimatedValue}")
+                elif estimatedValue >= valueFilter:
+                    print(f"{itemName} : {estimatedValue}")
+
+            else:
+                print("Invalid item type")
+                break
         
         currentPage += 1
 
     print("\nScanning Complete")
     
 else:
-    
     print("Player doesn't exist OR you've sent too many requests OR the BP servers are down.")
