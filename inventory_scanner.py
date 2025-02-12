@@ -60,7 +60,7 @@ def FilterNumber(num : str):
 
 
 if UserExists(userID):
-
+    print("Scanning inventory")
     currentPage = 1
 
     while True:
