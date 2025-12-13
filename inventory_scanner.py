@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from time import sleep
 
-itemTypes = {
+'''
+itemTypes
     0 : "AllItems",
     1 : "Hats",
     2 : "Crates",
@@ -16,7 +17,7 @@ itemTypes = {
     10 : "Textures",
     11: "Sounds",
     12 : "Models"
-}
+'''
 
 userID = 0  # Change to your desired UserID
 itemType = 0  # Filters to only display items of this type. Number to item type above
