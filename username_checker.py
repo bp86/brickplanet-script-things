@@ -26,9 +26,7 @@ for char1 in characters:
     if response.status_code == 200:
       soup = BeautifulSoup(response.text, "html.parser")
       text = soup.get_text()
-      requiredText = 'ken":fal'  # text its looking for: taken":false
-
-      # was shortened to save processing power
+      requiredText = 'taken":false'
 
       if requiredText in text:
         availableUsernames.append(username)
