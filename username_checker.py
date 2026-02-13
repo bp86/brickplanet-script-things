@@ -1,36 +1,48 @@
-'''
-
-INSTRUCTIONS:
-
-This was used by me (86) to find the remaining 2-character usernames on Brickplanet.
-
-Running the program is a waste of time. The only thing of value is this: https://www.brickplanet.com/api/register/check-username-availability?username=PlaceHolder
-
-'''
-
-
 import requests
 from bs4 import BeautifulSoup
+from time import sleep
 
 characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "_"]
 availableUsernames = []
+usernameLength = 2
 
-for char1 in characters:
-  for char2 in characters:
+if usernameLength < 2:
+    usernameLength = 2
+
+if usernameLength > 20:
+    usernameLength = 20
+
+
+def addCharacter(username: str) -> str:
+    usernames = []
+    
+    for char in characters:
+        if len(username) == usernameLength - 1:
+            usernames.append(username + char)
+        else:
+            usernames += addCharacter(username + char)
+
+    return usernames
+    
+
+for char in characters:
     url = "https://www.brickplanet.com/api/register/check-username-availability?username="
-    username = char1 + char2
+    usernames = addCharacter(char)
+    
+    for username in usernames:
+        response = requests.get(url + username)
+        print(username)
 
-    response = requests.get(url + username)
-    print(username)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "html.parser")
+            text = soup.get_text()
 
-    if response.status_code == 200:
-      soup = BeautifulSoup(response.text, "html.parser")
-      text = soup.get_text()
-      requiredText = 'taken":false'
-
-      if requiredText in text:
-        availableUsernames.append(username)
-
+            if "taken:false" in text:
+                availableUsernames.append(username)
+        
+        else:
+            print("Error, likely timeout.\nScan will resume in 30 seconds.")
+            sleep(30)
 
 print(availableUsernames)
 print(len(availableUsernames))
